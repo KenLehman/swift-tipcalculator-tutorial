@@ -45,8 +45,8 @@ class ViewController: UIKit.UIViewController {
         // 1
         // No longer available in Swift 2.0
         // tipCalc.total = Double((totalTextField.text as NSString).doubleValue)
-        // Need to look into the docs, there is probably a better way to do this
-        tipCalc.total = Double(NSString(string: totalTextField.text!).doubleValue)
+        tipCalc.total = Double(totalTextField.text!)!
+        
         
         // 2
         let possibleTips = tipCalc.returnPossibleTips()
