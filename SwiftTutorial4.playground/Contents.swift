@@ -38,3 +38,66 @@ class TipCalculatorModel {
     
 }
 
+
+
+// 1
+import UIKit
+
+// 2
+class TestDataSource : NSObject, UITableViewDataSource {
+    
+    // 3
+    let tipCalc = TipCalculatorModel(total: 33.25, taxPct: 0.06)
+    var possibleTips = Dictionary<Int, (tipAmt:Double, total:Double)>()
+    var sortedKeys:[Int] = []
+    
+    // 4
+    override init() {
+        possibleTips = tipCalc.returnPossibleTips()
+        sortedKeys = possibleTips.keys.sort()
+        super.init()
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sortedKeys.count
+    }
+    
+    // 1
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        // 2
+        let cell = UITableViewCell(style: UITableViewCellStyle.Value2, reuseIdentifier: nil)
+        
+        // 3
+        let tipPct = sortedKeys[indexPath.row]
+        
+        // 4
+        let tipAmt = possibleTips[tipPct]!.tipAmt
+        let total = possibleTips[tipPct]!.total
+        
+        // 5
+        cell.textLabel?.text = "\(tipPct)%:"
+        cell.detailTextLabel?.text = String(format:"Tip: $%0.2f, Total: $%0.2f", tipAmt, total)
+        return cell
+    }
+}
+
+
+let testDataSource = TestDataSource()
+let tableView = UITableView(frame:CGRect(x: 0, y: 0, width: 320, height: 320), style:UITableViewStyle.Plain)
+tableView.dataSource = testDataSource
+tableView.reloadData()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
